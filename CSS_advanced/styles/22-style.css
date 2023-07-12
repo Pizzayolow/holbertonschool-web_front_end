@@ -39,7 +39,6 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
     --nav-item-margin: 0 0 3rem 0;
     --nav-item-link-hover: var(--color-primary);
     --section-tagline-margin: 0;
-
 }
 
 *, *:before, *:after {
@@ -198,7 +197,7 @@ ul.row {
     padding: 0.5rem;
 }
 
-[data-section-theme=“dark”] {
+[data-section-theme="dark"] {
     --text-color: var(--color-white);
     --section-title-color: var(--color-white);
     background-color: var(--color-black);
