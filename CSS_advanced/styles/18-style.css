@@ -80,6 +80,13 @@
 	line-height: var(--line-height-base);
     }
     
+    .nav {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+    }
+
     .navbar-menu {
     float: right;
     margin: 0px;
