@@ -713,7 +713,7 @@
     font-size: var(--font-size-small);
   }
 
-  /* Form group
+/* Form group
 ============================= */
 
 .form-group {
@@ -724,7 +724,7 @@
 
 .form-group:focus-within {
     background-color: var(--color-light-grey);
-    transition: .3s;
+    transition: 0.3s;
 }
 
 /* Form field
@@ -735,7 +735,7 @@
 }
 
 .form-field-icon {
-    font-size: normal;
+    font-style: normal;
 }
 
 /* Form help
@@ -748,11 +748,11 @@
     color: var(--color-dark-grey);
     font-size: var(--font-size-small);
     max-height: 0;
-    transition: .3s;
+    transition: 0.3s;
     overflow: hidden;
 }
 
 .form-group:focus-within .form-help {
     max-height: 20rem;
-    margin: .4rem 0 0;
+    margin: 0.4rem 0 0;
 }
