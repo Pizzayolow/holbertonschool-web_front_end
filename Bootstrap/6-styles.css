@@ -1,0 +1,51 @@
+.custom-btn-color {
+    background-color: #E0003C; /* Remplacez #ff5733 par le code couleur de votre choix */
+    color: white;
+}
+
+/* Optionnel : Style supplémentaire pour le survol */
+.custom-btn-color:hover {
+    background-color: #BC1340; /* Couleur différente au survol */
+    color: white;
+}
+
+.custom-btn-border-color {
+    border-color: #E0003C;
+    color: #E0003C;
+}
+
+.custom-btn-border-color:hover {
+    border-color: #E0003C;
+    color: #E0003C;
+}
+
+.a-color {
+    color: #E0003C;
+}
+
+.border-bottom-custom {
+    border-bottom: 1px #E0003C solid;
+}
+
+.custom-radius {
+    border-radius: 1rem;
+}
+
+.a-color:hover {
+    color: #E0003C;
+}
+
+
+.card-border-color {
+    border-color: #E0003C;
+}
+
+.card-header-color-background {
+    background-color: #E0003C;
+    color: white;
+}
+
+.text-color-muted {
+    color: #8C8C8C;
+}
+
