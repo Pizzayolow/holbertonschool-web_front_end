@@ -36,10 +36,6 @@
 }
 
 
-.card-border-color {
-    border-color: #E0003C;
-}
-
 .card-header-color-background {
     background-color: #E0003C;
     color: white;
@@ -47,5 +43,15 @@
 
 .text-color-muted {
     color: #8C8C8C;
+}
+
+.card {
+    border-radius: 1rem;
+    border-color: #E0003C;
+}
+
+.card > .card-header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }
 
