@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+	<meta charset="utf-8" />
+	<title>Task 6</title>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			function createFamilyTree() {
+				$("body").append(`
+				<table>
+					<thead>
+						<tr>
+							<th>Firstname</th>
+							<th>Lastname</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+					`);
+			};
+
+
+			function createForm() {
+				$("body table").before(`
+						<input type="text"">
+						<input type="text"">
+						<select>
+							<option value="before">Before</option>
+							<option value="after">After</option>
+						</select>
+						<input type="submit" value="Submit">
+					`);
+				
+				$("input[type='submit']").on("click", function () {
+					addNewMember($('input').first().val(), $('input:nth-of-type(2)').val(), $('select').val());
+				});
+			}
+
+			function addNewMember(firstName, lastName, position) {
+				if (position === "before") {
+					$("body table tbody").prepend(`
+						<tr>
+							<td>${firstName}</td>
+							<td>${lastName}</td>
+							<td>(x)</td>
+						</tr>
+					`)
+				}
+				else {
+					$("body table tbody").append(`
+						<tr>
+							<td>${firstName}</td>
+							<td>${lastName}</td>
+							<td>(x)</td>
+						</tr>
+					`)
+				}
+				$("body table tbody td:last-child").css("background-color", "orange")
+				$("body table tbody td:last-child").on("click", function () {
+					$(this).parent("tr").remove();
+				})
+			}
+
+			createFamilyTree();
+			createForm();
+		});
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

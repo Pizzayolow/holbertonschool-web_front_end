@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+	<meta charset="utf-8" />
+	<title>Task 9</title>
+
+	<style>
+		.loading {
+			opacity: 0.2;
+		}
+	</style>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+		</script>
+
+	<script>
+
+		$(document).ready(function () {
+			function createSearchForm() {
+				$("body").append(`
+				<input type="text">
+				</input>
+				<input type="submit">
+				</input>
+				<ul></ul>
+				<ul id="pagination"></ul>
+				`);
+
+				$("input[type='submit']").on("click", function () {
+					searchTerm = $('input[type="text"]').val();
+					queryWikipedia(searchTerm);
+				});
+			}
+			createSearchForm();
+		});
+
+
+		function displayLoading(loading) {
+			let first_ul = $("body ul:first");
+			if (loading) {
+				first_ul.wrap("<div class='loading'></div>");
+			}
+			else {
+				first_ul.unwrap();
+			}
+		}
+
+
+		let searchTerm = '';
+		function queryWikipedia(search, offset = 0) {
+			let url = "https://en.wikipedia.org/w/api.php";
+			var params = new URLSearchParams({
+				action: "query",
+				list: "search",
+				srsearch: search,
+				format: "json",
+				sroffset: offset,
+			});
+			displayLoading(true);
+
+			$.ajax({
+				url: `${url}?${params}`,
+				dataType: 'jsonp',
+				success: function (json) {
+					
+					let totalHits = json.query.searchinfo.totalhits;
+					let itemsPerPage = 10;
+					let currentOffset = offset;
+					buildPagination(totalHits, itemsPerPage, currentOffset);
+					let results = json.query.search;
+					let articles = '';
+					results.forEach(element => {
+						articles += addNewArticle(element.pageid, element.title, element.snippet);
+					});
+					displayLoading(false);
+					$("body ul:first").html(articles);
+				},
+				error: function () {
+					console.log("Une erreur est survenue.")
+				}
+			});
+		}
+
+
+		function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
+			let paginationList = '';
+			let totalPages = Math.ceil(numberOfItems / itemsPerPage);
+			for (let i = 0; i < totalPages; i++) {
+				let pageNumber = i + 1;
+				let isCurrentPage = (i * itemsPerPage) === currentOffset;
+				let style = isCurrentPage ? "font-weight: bold; margin-left: 10px;" : "cursor: pointer; margin-left: 10px;";
+				paginationList += `<li style="${style}; display: inline-block;" onclick="queryWikipedia('${searchTerm}', ${i * itemsPerPage})">${pageNumber}</li>`;
+			}
+
+			$('#pagination').html(paginationList);
+
+		}
+
+
+		function addNewArticle(id, title, snippet) {
+			return `
+				<li>
+					<p><span>${id} - <b>${title}</b></span></p>
+					<p>${snippet}</p>
+				</li>
+				`
+		}
+
+
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

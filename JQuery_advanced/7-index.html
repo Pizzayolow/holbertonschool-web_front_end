@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+	<meta charset="utf-8" />
+	<title>Task 7</title>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<script>
+		$(document).ready(function () {
+			function createSearchForm() {
+				$("body").append(`
+				<input type="text">
+				</input>
+				<input type="submit">
+				</input>
+				<ul></ul>
+				`);
+
+				$("input[type='submit']").on("click", function () {
+					queryWikipedia($('input').first().val());
+				});
+			}
+
+			function addNewArticle(id, title, snippet) {
+				let article =
+				`
+				<li>
+					<p><span>${id} - <b>${title}</b></p>
+					<p>${snippet}</p>	
+				</li>
+				`
+				$("body ul").append(article);
+			}
+
+			function queryWikipedia(search) {
+				let url = "https://en.wikipedia.org/w/api.php";
+				var params = new URLSearchParams({
+					action: "query",
+					list: "search",
+					srsearch: search,
+					format: "json",
+				});
+				
+				$.ajax({
+					url:`${url}?${params}`,
+					dataType: 'jsonp',
+					success:function(json){
+						let results = json.query.search;
+						results.forEach(element => {
+							addNewArticle(element.pageid, element.title, element.snippet)
+						});
+					},
+					error:function(){
+						console.log("Une erreur est survenue.")
+					}
+				});
+			}
+			createSearchForm();
+		});
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>
