@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Cookies_local_storage</title>
+    <meta name="description" content="Description of the page less than 150 characters">
+	
+	<script>
+		function setCookies() {
+			// Get the date
+			const d = new Date();
+			// Add 10 days
+  			d.setTime(d.getTime() + (10*24*60*60*1000));
+			// create the expire key
+			let expires = ";expires="+ d.toUTCString();
+			// Set cookies values
+			const firstName = document.querySelector("#firstname");
+			const email = document.querySelector("#email");
+			// Add cookies
+			document.cookie = `firstName=${firstName.value}`+ expires;
+			document.cookie = `email=${email.value}`+ expires;
+		}
+
+		function showCookies() {
+			// Retrieve the cookies
+			let cookies = document.cookie;
+			// Create a <p>
+			const para = document.createElement("p");
+			// Create a text element with the cookies elements
+			let node = document.createTextNode("Cookies:" + cookies);
+			// Append the cookie to the <p>
+			para.appendChild(node);
+			// Append the <p> in the body
+			document.body.appendChild(para);
+		}
+
+	</script>
+  </head>
+  <body>
+    <main>
+		<input type="text" id="firstname" placeholder="FirstName">
+		<input type="text" id="email" placeholder="Email">
+
+		<button onclick="setCookies()">Log me in</button>
+
+		<h1>Cookies</h1>
+		<button onclick="showCookies()">Show the cookies</button>
+    </main>
+	<footer>
+	</footer>
+  </body>
+</html>
