@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Cookies_local_storage</title>
+    <meta name="description" content="Description of the page less than 150 characters">
+	
+	<script>
+		function setCookies() {
+			const firstName = document.querySelector("#firstname");
+			const email = document.querySelector("#email");
+			document.cookie = `firstName=${firstName.value}`;
+			document.cookie = `email=${email.value}`;
+		}
+
+		function showCookies() {
+			let cookies = document.cookie.split(';');
+			// Parcourir chaque cookie
+			cookies.forEach(cookie => {
+				// Nettoyer les espaces blancs potentiels au début de chaque cookie
+				let cleanCookie = cookie.trim();
+				// Ajoute le cookie dans un node
+				let node = document.createTextNode(cleanCookie);
+				para.appendChild(node);
+				para.appendChild(document.createElement("br"));
+			});
+			// Ajoute le cookie en pied de page
+			document.body.appendChild(para);
+		}
+
+	</script>
+  </head>
+  <body>
+    <main>
+		<input type="text" id="firstname" placeholder="FirstName">
+		<input type="text" id="email" placeholder="Email">
+
+		<button onclick="setCookies()">Log me in</button>
+
+		<h1>Cookies</h1>
+		<button onclick="showCookies()">Show the cookies</button>
+    </main>
+	<footer>
+	</footer>
+  </body>
+</html>
