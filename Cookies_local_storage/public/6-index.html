@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<title>Cookies_session_storage</title>
+	<meta name="description" content="Description of the page less than 150 characters">
+	<script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", (event) => {
+			// Setup list
+			let availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
+			// Checking if sessionStorage is available
+			function issessionStorageAvailable() {
+				let test = 'test';
+				try {
+					sessionStorage.setItem(test, test);
+					sessionStorage.removeItem(test);
+					return true;
+				} catch (e) {
+					return false;
+				}
+			}
+			if (!issessionStorageAvailable()) {
+				alert('Sorry, your browser does not support Web storage. Try again with a better one');
+			}
+			else {
+
+				createStore();
+				displayCart();
+				// If storage is available
+				function addItemToCart(item) {
+					sessionStorage.setItem(item, true);
+				}
+
+				function createStore(item) {
+					// Creating a list
+					const list = document.createElement("ul");
+					list.setAttribute('id', 'list')
+					document.body.appendChild(list);
+					// We go throught the list
+					for (let i = 0; i < availableItems.length; i++) {
+						// We create an li element 
+						let entry = document.createElement('li');
+						let dot = list.appendChild(entry);
+						// We add the text
+						let node = document.createTextNode(availableItems[i]);
+						dot.appendChild(node);
+						// Callback function to call the function addItemToCart()
+						dot.onclick = (function (item) {
+							return function () {
+								addItemToCart(item);
+							}
+						})(availableItems[i]);
+
+						dot.style.cursor = 'pointer';
+					};
+				};
+
+				function displayCart() {
+					// looping through sessionStorage
+					if (sessionStorage.length) {
+						let p = document.createElement('p');
+						let nodeText = document.createTextNode(`You previously had ${sessionStorage.length} items in your cart`);
+						p.appendChild(nodeText);
+						document.body.appendChild(node)
+					};
+
+				};
+
+
+			};
+
+		});
+	</script>
+</head>
+
+<body>
+	<main>
+	</main>
+	<footer>
+	</footer>
+</body>
+
+</html>
