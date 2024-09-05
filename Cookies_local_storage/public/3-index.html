@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+	<title>Cookies_local_storage</title>
+	<meta name="description" content="Description of the page less than 150 characters">
+
+	<script>
+		document.addEventListener("DOMContentLoaded", (event) => {
+			function showForm() {
+				const loginForm = document.getElementById("loginForm");
+				const welcomeMsg = document.getElementById("welcomeMsg");
+				if (welcomeMsg) {
+					welcomeMsg.remove();
+				}
+				loginForm.style.display = "block";
+			}
+
+			function hideForm() {
+				const loginForm = document.getElementById("loginForm");
+				loginForm.style.display = "none";
+			}
+
+			function deleteCookiesAndShowForm() {
+				document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+				showForm();
+			}
+
+			function showWelcomeMessageOrForm() {
+				if ((getCookie('firstName') === '') || (getCookie('email') === '')) {
+					showForm();
+				}
+				else {
+					// On cache le formulaire
+					hideForm();
+					// On créé un titre Welcome
+					const title = document.createElement("h1");
+
+					// On créé un lien de déconnexion
+					const logout = document.createElement("a");
+					logout.setAttribute('style', 'font-style: italic; cursor:pointer; margin-left:10px;');
+					logout.appendChild(document.createTextNode('logout'));
+
+					logout.addEventListener('click', deleteCookiesAndShowForm);
+
+					// On ajoute le titre et l'username
+					let node = document.createTextNode(`Welcome ${getCookie('firstName')}`);
+
+					// On ajoute le text à notre titre
+					title.appendChild(node);
+
+					// On créé une div container
+					const div = document.createElement("div");
+					div.setAttribute('id', 'welcomeMsg');
+					div.setAttribute('style', 'display:flex');
+					div.style.alignItems = 'center';
+
+					// On ajoute le titre au container
+					div.appendChild(title);
+					div.appendChild(logout);
+
+
+					// On ajoute le container
+					document.body.appendChild(div);
+
+				}
+			}
+
+
+
+			function setCookies() {
+				// Get the date
+				const d = new Date();
+
+				// Add 10 days
+				d.setTime(d.getTime() + (10 * 24 * 60 * 60 * 1000));
+
+				// create the expire key
+				let expires = ";expires=" + d.toUTCString();
+
+				// Get values of field
+				const firstName = document.querySelector("#firstname");
+				const email = document.querySelector("#email");
+
+				// Add cookies 
+				document.cookie = `firstName=${firstName.value}` + expires;
+				document.cookie = `email=${email.value}` + expires;
+
+				showWelcomeMessageOrForm();
+			}
+
+			function showCookies() {
+				// Retrieve the cookies
+				let cookies = document.cookie.split(';');
+
+				// Create a <p>
+				const para = document.createElement("p");
+
+				// Create a text element with the cookies elements
+				let node = document.createTextNode(`Email: ${getCookie('email')} - Firstname: ${getCookie('firstName')}`);
+
+				// Append the cookie to the <p>
+				para.appendChild(node);
+
+				// Append the <p> in the body
+				document.body.appendChild(para);
+			}
+
+			function getCookie(cname) {
+				// Retrieve the key of the cookie
+				let name = cname + "=";
+				// Retrieve all the cookies
+				let decodedCookie = decodeURIComponent(document.cookie);
+				// Parse the cookies into a array
+				let ca = decodedCookie.split(';');
+				// Browse the cookies array
+				for (let i = 0; i < ca.length; i++) {
+					let c = ca[i];
+					while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+					}
+					// Si on trouve le nom du cookie, on return
+					if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}
+			showWelcomeMessageOrForm();
+			const loginButton = document.getElementById("loginButton");
+			loginButton.addEventListener('click', setCookies);
+		});
+	</script>
+</head>
+
+<body>
+	<main>
+		<div id="loginForm">
+			<h2>Login to the website</h2>
+			<input type="text" id="firstname" placeholder="FirstName">
+			<input type="text" id="email" placeholder="Email">
+			<button id="loginButton" >Log me in</button>
+		</div>
+	</main>
+	<footer>
+	</footer>
+</body>
+
+</html>
